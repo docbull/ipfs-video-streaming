@@ -1,5 +1,11 @@
 {
   "dependencies": {
-    "ipfs-api": "^26.1.2"
+    "ipfs-api": "^26.1.2",
+    "ipfs-core": "^0.14.1",
+    "ipfs-http-client": "^56.0.1",
+    "requirejs": "^2.3.6"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.13"
   }
 }
