@@ -8,170 +8,21 @@
                 height: 360px;
             }
         </style>
-        <script>
-            var CID = [
-                "QmTUyCpmqExmxReEsDNLa36JEHnmFnBdpngCvj944Abm8w",
-                "QmTmcv6V1dVpW4bmZXdzCYYLpdMN1N44YpmhpaJHKeWaRi",
-                "QmWEpB5V3S5VYyx6RHpCEYAcSUXK7g94s9A6t26XBjKznU",
-                "QmeU5BTCTSLB1cDoGsMPkqfU3Y7FtJJwEsgr4Tcz7G8PK2",
-                "QmU6zLGFkVrpy4cJZ6wAEFuUNmWhpMKzM8JLkcBVZ9jqvL",
-                "QmZkuu6eK3E6DNcgKsmsrv7Y67MhNBsDU6ryXmKi5BuLxW",
-                "QmfNxuRFaVLXvhRHfh4hTdPvyA899pzvSo78YCiV9wDrJL",
-                "Qmd1L9apPQYugWT6pCgkcx5zpwn7Nh4TiqZYKCykHdN44X",
-                "QmUH3DjHNdx1uKYohARpG91P5msBCnDThcUcSNRZhFK35w",
-                "QmS9VqQoM6YPnfexU88RMfLjH4G2x3ZUwV4rWttqf8RjtG",
-                "QmTy7jSvka3Hxyn5VubHZZ734mbqv6rfW1hRmZnUBhkrng",
-                "Qmc4SYibzXL2rXE9XdgfnMxx95fbNi56LwqErdEMQa6ECa",
-                "QmSYpNveJqCGoPTLwyA3g6xmiXLS3ExZTD3U1nwSQni79H",
-                "QmTxHXhFHN4wX6G1cHDaL3ukN3xqGAbD8SP99oYnxHzf6y",
-                "QmcLRgjjs5LckTpgwoy6Z2wUP8pPkTNgNwJ2NSo5b9qNQc",
-                "QmSMymQKhTmbQUJNpwJrVeWp8MRnrQxvd9Udi6s8Qt93bU",
-                "QmVXzTCdS6YNVQJJe26GLW1g41GPXpadYEE13akkukSn8b",
-                "QmT8rnc4mbEGfzo61F5E7Rtw92ZcWhRXxnz5sem4LDVPn3",
-                "QmU5aNqHMoRiEXRNZN8EovNJdTWwFJPZYGR5ZkFp52uSsN",
-                "QmbtMcHQMD4wVgyyHDWXMLqkVJn91JwxuVamatzLXK65a3",
-                "Qmem8Gt6x5bUYksQyzr9mp9CT3EHQWx4ggbHRwpssrFKs9",
-                "QmVj7764oq2rxLCcwynQYnGZ1vuGnV2wSYEQvTRyvcu4Dw",
-                "QmdFEEvPj19hkHpgumvGhVTXTBG9VSiyuL9YEpQoZ3GYK3",
-                "QmXSJZC7WSJTA7gd2KPWKgPZuojnds3qsXaJg4LUAKATDX",
-                "QmVvCaEHrckhxqZ9Eyhvsvrv2Goj4iKZP6ZVqDTsTtaRfi",
-                "QmTeC1EqYNgmMjtAT4Ru6dMT1oBXmoAGDwrVwGxgU1kZVS",
-                "QmQ4SqCAauYGbKDxhUrBwWGo6T1C7qqLzhJTaixNkY9ZyR",
-                "QmPhLwzDMba9uHVt3NbWNBavhvMdvKmYvoXZoKh6atcsBu",
-                "QmYcwG3Yt9hCCDYtUpd8YrVcbwxKkh1EfdPfPz7o4jzMyE",
-                "QmYbGXsyHxhjnkngZC5ziddDUaZubFSUY8z5QXa7UtN8SH"
-            ];
-
-            var player,firstLoad = true;
-        
-            function init() {
-                setInterval(() => {
-                    for (let i=0; i<5; i++) {
-                        ipfs.files.get(CID[i], (err, files) => {
-                            files.forEach((file) => {
-                                console.log(file.path);
-                                console.log(file.content.toString('utf8'))
-                                downloadFile = file.content.toString('utf8')
-
-                                fs.writeFileSync(`el_10_${i+1}.m4s`, downloadFile, 'utf8', (err) => {
-                                    if (err) {
-                                        console.log(err);
-                                    }
-                                    console.log('write end');
-                                })
-                            })
-                        })
-                    }
-                }, 5000);
-
-                ipfs = await Ipfs.create({
-                    repo: 'ok' + Math.random(),
-                    config: {
-                        Addresses: {
-                            Swarm: [
-                                '/dns4/star.thedisco.zone/tcp/9090/wss/p2p-webrtc-star',
-                                '/dns6/star.thedisco.zone/tcp/9090/wss/p2p-webrtc-star'
-                            ]
-                        },
-                    }
-                });
-
-                peers = await ipfs.swarm.peers();
-                for (i in peers) {
-                    if (peers[i].peer == peer) {
-                        return
-                    }
-                }
-                peers = await ipfs.swarm.peers();
-                for (i in peers) {
-                    // if we're already connected to the peer, don't bother doing a
-                    // circuit connection
-                    if (peers[i].peer == peer) {
-                        return;
-                    }
-                }
-                try {
-                    await ipfs.swarm.connect(addr);
-                } catch(err) {
-                    console.log(err);
-                    await ipfs.swarm.connect(addr);
-                }
-
-                async function sendData(data, chan) {
-                    await ipfs.pubsub.publish(prefix + chan, data);
-                }
-
-
-                player = dashjs.MediaPlayer().create();
-                player.updateSettings({ 'debug': { 'logLevel': dashjs.Debug.LOG_LEVEL_NONE }});
-            }
-        
-            function showEvent(e)
-            {
-                log("Event received: " + e.type);
-                for (var name in e)
-                {
-                    if (typeof e[name] != 'object') {
-                        log("    " + name + ": " + e[name]);
-                    }
-                }
-                for (name in e)
-                {
-                    if (typeof e[name] == 'object' )
-                    {
-                        log("    " + name + ":");
-                        for (name2 in e[name])
-                        {
-                            log("        " + name2 + ": " + JSON.stringify(e[name][name2]));
-                        }
-                    }
-                }
-            }
-        
-        
-            function log(msg) {
-                msg = msg.length > 90 ? msg.substring(0, 90) + "..." : msg; 
-                var tracePanel = document.getElementById("trace");
-                tracePanel.innerHTML += msg + "\n";
-                tracePanel.scrollTop = tracePanel.scrollHeight;
-                console.log(msg);
-            }
-        
-            function setListener(eventName)
-            {
-                player.on(dashjs.MediaPlayer.events[eventName],showEvent);
-                var element = document.createElement("input");
-                element.type = "button";
-                element.className = "btn btn-danger";
-                element.id = eventName;
-                element.value = "Remove " + eventName;
-                element.onclick = function() {
-                    player.off(dashjs.MediaPlayer.events[eventName],showEvent);
-                    document.getElementById("eventHolder").removeChild(element);
-                };
-                document.getElementById("eventHolder").appendChild(element);
-            }
-        
-            function load(button)
-            {
-                var url = "data/Elephants/dash.mpd";
-        
-                if (!firstLoad)
-                {
-                    player.attachSource(url);
-                }
-                else
-                {
-                    firstLoad = false;
-                    button.value = "RELOAD PLAYER";
-                    player.initialize(document.querySelector("video"), url, true);
-                }
-                document.getElementById("trace").innerHTML = "";
-            }
-        </script>
     </head>
     <script src="js/dash.all.debug.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="module" src="./js/front.js"></script>
+    <script src="js/index.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+        const node = await Ipfs.create()
+        const results = await node.add('=^.^= meow meow')
+        const cid = results[0].hash
+        console.log('CID created via ipfs.add:', cid)
+        const data = await node.cat(cid)
+        console.log('Data read back via ipfs.cat:', new TextDecoder().decode(data))
+        })
+    </script>
     <body>
         <h1>IPFS-based P2P Streaming</h1>
         <!--
@@ -179,82 +30,76 @@
             <video data-dashjs-player="" autoplay="" src="data/Elephants/dash.mpd" controls="true"></video>
         </div>
     -->
-    <main>
-        <div class="container py-4">
-            <header class="pb-3 mb-4 border-bottom">
-                <img class=""
-                     src="data/watson.png"
-                     width="200">
-            </header>
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="h-100 p-5 bg-light border rounded-3">
+        <main>
+            <div class="container py-4">
+                <header class="pb-3 mb-4 border-bottom">
+                    <img class=""
+                        src="data/watson.png"
+                        width="200">
+                </header>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="h-100 p-5 bg-light border rounded-3">
+                            <div>
+                                <select class="form-select" id="availableEvents" onChange="setListener(this.options[this.selectedIndex].text)">
+                                    <option selected disabled>Select an event ..</option>
+                                    <option>BUFFER_EMPTY</option>
+                                    <option>BUFFER_LOADED</option>
+                                    <option>CAN_PLAY</option>
+                                    <option>DYNAMIC_TO_STATIC</option>
+                                    <option>ERROR</option>
+                                    <option>LOG</option>
+                                    <option>MANIFEST_LOADED</option>
+                                    <option>METRIC_ADDED</option>
+                                    <option>METRIC_CHANGED</option>
+                                    <option>METRIC_UPDATED</option>
+                                    <option>METRICS_CHANGED</option>
+                                    <option>PERIOD_SWITCH_COMPLETED</option>
+                                    <option>PERIOD_SWITCH_STARTED</option>
+                                    <option>PLAYBACK_ENDED</option>
+                                    <option>PLAYBACK_ERROR</option>
+                                    <option>PLAYBACK_METADATA_LOADED</option>
+                                    <option>PLAYBACK_PAUSED</option>
+                                    <option>PLAYBACK_PLAYING</option>
+                                    <option>PLAYBACK_PROGRESS</option>
+                                    <option>PLAYBACK_RATE_CHANGED</option>
+                                    <option>PLAYBACK_SEEKED</option>
+                                    <option>PLAYBACK_SEEKING</option>
+                                    <option>PLAYBACK_STARTED</option>
+                                    <option>PLAYBACK_TIME_UPDATED</option>
+                                    <option>PLAYBACK_WAITING</option>
+                                    <option>STREAM_UPDATED</option>
+                                    <option>STREAM_INITIALIZED</option>
+                                    <option>TEXT_TRACK_ADDED</option>
+                                    <option>TEXT_TRACKS_ADDED</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <video controls="true"></video>
                         <div>
-                            <select class="form-select" id="availableEvents" onChange="setListener(this.options[this.selectedIndex].text)">
-                                <option selected disabled>Select an event ..</option>
-                                <option>BUFFER_EMPTY</option>
-                                <option>BUFFER_LOADED</option>
-                                <option>CAN_PLAY</option>
-                                <option>DYNAMIC_TO_STATIC</option>
-                                <option>ERROR</option>
-                                <option>LOG</option>
-                                <option>MANIFEST_LOADED</option>
-                                <option>METRIC_ADDED</option>
-                                <option>METRIC_CHANGED</option>
-                                <option>METRIC_UPDATED</option>
-                                <option>METRICS_CHANGED</option>
-                                <option>PERIOD_SWITCH_COMPLETED</option>
-                                <option>PERIOD_SWITCH_STARTED</option>
-                                <option>PLAYBACK_ENDED</option>
-                                <option>PLAYBACK_ERROR</option>
-                                <option>PLAYBACK_METADATA_LOADED</option>
-                                <option>PLAYBACK_PAUSED</option>
-                                <option>PLAYBACK_PLAYING</option>
-                                <option>PLAYBACK_PROGRESS</option>
-                                <option>PLAYBACK_RATE_CHANGED</option>
-                                <option>PLAYBACK_SEEKED</option>
-                                <option>PLAYBACK_SEEKING</option>
-                                <option>PLAYBACK_STARTED</option>
-                                <option>PLAYBACK_TIME_UPDATED</option>
-                                <option>PLAYBACK_WAITING</option>
-                                <option>STREAM_UPDATED</option>
-                                <option>STREAM_INITIALIZED</option>
-                                <option>TEXT_TRACK_ADDED</option>
-                                <option>TEXT_TRACKS_ADDED</option>
-                            </select>
+                            <input type="button" value="Load" onclick="load(this)"/>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <video controls="true"></video>
-                    <div>
-                        <input type="button" value="Load" onclick="load(this)"/>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-floating">
+                            <textarea class="form-control" placeholder="Trapped events will be displayed here" id="trace"></textarea>
+                            <label for="trace">Event log</label>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-floating">
-                        <textarea class="form-control" placeholder="Trapped events will be displayed here" id="trace"></textarea>
-                        <label for="trace">Event log</label>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="code-output"></div>
                     </div>
                 </div>
+                <footer class="pt-3 mt-4 text-muted border-top">
+                    &copy; DASH-IF
+                </footer>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div id="code-output"></div>
-                </div>
-            </div>
-            <footer class="pt-3 mt-4 text-muted border-top">
-                &copy; DASH-IF
-            </footer>
-        </div>
-    </main>
-
-         <script>
-             document.addEventListener("DOMContentLoaded", function () {
-                 init();
-             });
-         </script>
+        </main>
     </body>
 </html>
