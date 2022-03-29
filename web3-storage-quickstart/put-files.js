@@ -1,3 +1,4 @@
+import { execa } from 'execa';
 import process from 'process'
 import minimist from 'minimist'
 import { Web3Storage, getFilesFromPath } from 'web3.storage'
@@ -16,7 +17,6 @@ async function main() {
 
     const storage = new Web3Storage({ token })
     const files = []
-
     for (const path of args._) {
         const pathFiles = await getFilesFromPath(path)
         files.push(...pathFiles)
@@ -24,7 +24,9 @@ async function main() {
 
     console.log(`Uploading ${files.length} files`)
     const cid = await storage.put(files)
-    console.log('Content added with CID:', cid)
+    console.log('Content added with CIDv1:', `"${cid}"`)
+    const { stdout } = await execa(`ipfs`, [`cid`, `format`, `-f`, `"%M"`, `-b`, `base58btc`, `${cid}`]);
+    console.log('Content added with CIDv0:', stdout)
 }
 
 main()
