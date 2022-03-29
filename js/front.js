@@ -55,7 +55,7 @@ function setListener(eventName) {
         
 function load(button) {
     var url = "data/Elephants/dash.mpd";
-        
+    
     if (!firstLoad)
     {
         player.attachSource(url);
