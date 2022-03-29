@@ -6,8 +6,9 @@ import { create } from 'ipfs-core'
 import Hls from 'hls.js'
 import HlsjsIpfsLoader from 'hlsjs-ipfs-loader'
 */
+
 import { create } from '../node_modules/ipfs-core/cjs/src/index.js'
-import Hls from '../node_modules/hls.js/dist/hls.js'
+import Hls from 'https://cdn.jsdelivr.net/npm/hls.js@latest'
 import HlsjsIpfsLoader from '../node_modules/hlsjs-ipfs-loader/src/index.js'
 
 // Rapunzel CIDv0
@@ -30,7 +31,7 @@ async function dht() {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-  const testHash = 'QmNMqPbeey2UgEg845jCbXoYS6j4r7H8sdHECSWySXFKUC'
+  const testHash = 'QmR3zmVpKFvukuUfXQiKmQYjgiEPnnu5MqShXc9BDXg7Lc'
   const repoPath = 'ipfs-' + Math.random()
   const node = await create({ repo: repoPath })
 
