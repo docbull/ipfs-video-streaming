@@ -4,14 +4,50 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
-
+      .video-container {
+        cursor: pointer;
+        float: left;
+        margin: 10px;
+        width: 317px;
+        height: 230px;
+      }
+      .video-container:hover {
+        transform: scale(1.05);
+      }
+      .thumbnail {
+        width: 312px;
+        height: 177px;
+      }
+      .video-lists {
+        
+      }
     </style>
-    <title>Web3.0 Video Streaming</title>
+    <title>INLabTube</title>
     <link rel="icon" href="/favicon.ico"/>
+
+    <script>
+      function playVideo(cid) {
+        window.location.href = '/player?cid=' + cid;
+      }
+    </script>
   </head>
   <body>
-    <button class="favorite styled" type="button" onClick="location.href='/player'">
-        Rapunzel
-    </button>
+    <div class="mainpage">
+      <div class="menubar">
+        <div>
+          INLabTube
+        </div>
+      </div>
+      <div class="video-lists">
+        <div class="video-container" onclick="playVideo('QmR3zmVpKFvukuUfXQiKmQYjgiEPnnu5MqShXc9BDXg7Lc')">
+          <div><img class="thumbnail" src="/rapunzel.jpeg"></div>
+          <div>Mandy Moore - When Will My Life Begin? (From "Tangled"/Sing-Along)</div>
+        </div>
+        <div class="video-container" onclick="playVideo('QmNMqPbeey2UgEg845jCbXoYS6j4r7H8sdHECSWySXFKUC')">
+          <div><img class="thumbnail" src="/bbibbi.jpeg"></div>
+          <div>[MV] IU(아이유) _ BBIBBI(삐삐)</div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
