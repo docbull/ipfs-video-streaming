@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      video {
+        width: 640px;
+        height: 360px;
+      }
+    </style>
+    <title>Rapunzel</title>
+    <link rel="icon" href="/favicon.ico"/>
+
+    <!-- <script src="/js-ipfs.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/ipfs/dist/index.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/0.12.4/hls.js"></script>
+    <script src="/hlsjs-ipfs-loader.min.js"></script>
+  </head>
+  <body>
+    <script>
+      init()
+      
+      async function init() {
+        const repoPath = 'ipfs-' + Math.random()
+        const node = await Ipfs.create({repo: repoPath})
+
+        const CID = "QmR3zmVpKFvukuUfXQiKmQYjgiEPnnu5MqShXc9BDXg7Lc";
+        Hls.DefaultConfig.loader = HlsjsIpfsLoader;
+        Hls.DefaultConfig.debug = false;
+        if (Hls.isSupported()) {
+          const video = document.getElementById('video');
+          const hls = new Hls();
+          hls.config.ipfs = node;
+          hls.config.ipfsHash = CID;
+          hls.loadSource('master.m3u8');
+          hls.attachMedia(video);
+          hls.on(Hls.Events.MANIFEST_PARSED, () => {
+            const message = document.createTextNode(`${CID}`)
+            status.appendChild(message)
+
+            video.play();
+          });
+        } else {
+          const message = document.createTextNode()
+        }
+      }
+    </script>
+    <video id="video" controls autoplay></video>
+    <div id="status"></div>
+  </body>
+</html>
