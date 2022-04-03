@@ -19,13 +19,16 @@
   </head>
   <body>
     <script>
+      let state = window.location.search;
+      let splitState = state.split('=');
+      let CID = splitState[1];
+
       init()
       
       async function init() {
         const repoPath = 'ipfs-' + Math.random()
         const node = await Ipfs.create({repo: repoPath})
 
-        const CID = "QmR3zmVpKFvukuUfXQiKmQYjgiEPnnu5MqShXc9BDXg7Lc";
         Hls.DefaultConfig.loader = HlsjsIpfsLoader;
         Hls.DefaultConfig.debug = false;
         if (Hls.isSupported()) {
