@@ -9,13 +9,13 @@
         height: 360px;
       }
     </style>
-    <title>Rapunzel</title>
+    <title>INLabTube</title>
     <link rel="icon" href="/favicon.ico"/>
 
     <!-- <script src="/js-ipfs.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/ipfs/dist/index.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/0.12.4/hls.js"></script>
-    <script src="/hlsjs-ipfs-loader.min.js"></script>
+    <script src="/test.min.js"></script>
   </head>
   <body>
     <script>
@@ -23,16 +23,17 @@
       let splitState = state.split('=');
       let CID = splitState[1];
 
-      init()
+      initIPFS()
       
-      async function init() {
-        const repoPath = 'ipfs-' + Math.random()
-        const node = await Ipfs.create({repo: repoPath})
+      async function initIPFS() {
+        const repoPath = 'ipfs-' + Math.random();
+        const node = await Ipfs.create({repo: repoPath});
 
         Hls.DefaultConfig.loader = HlsjsIpfsLoader;
         Hls.DefaultConfig.debug = false;
         if (Hls.isSupported()) {
           const video = document.getElementById('video');
+          const status = document.getElementById('status');
           const hls = new Hls();
           hls.config.ipfs = node;
           hls.config.ipfsHash = CID;
@@ -45,10 +46,17 @@
             video.play();
           });
         } else {
-          const message = document.createTextNode()
+          const status = document.getElementById('status');
+          const message = document.createTextNode('Sorry, your browser does not support HLS')
+          status.appendChild(message)
         }
       }
+
+      async function initHLS() {
+        
+      }
     </script>
+
     <video id="video" controls autoplay></video>
     <div id="status"></div>
   </body>

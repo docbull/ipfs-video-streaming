@@ -1,0 +1,1 @@
+{"version":3,"file":"events.js","sourceRoot":"","sources":["../../../src/lib/serialization/events.ts"],"names":[],"mappings":";;;AAAA,4CAAwC;AAYxC;;;;;;GAMG;AACH,MAAa,cAAe,SAAQ,cAAK;IAkBrC,YACI,IAAY,EACZ,OAA0B,EAC1B,MAAsC;QAEtC,KAAK,CAAC,IAAI,CAAC,CAAC;QACZ,IAAI,CAAC,OAAO,GAAG,OAAO,CAAC;QACvB,IAAI,CAAC,MAAM,GAAG,MAAM,CAAC;IACzB,CAAC;CACJ;AA3BD,wCA2BC"}
