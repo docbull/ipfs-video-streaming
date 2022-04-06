@@ -3,21 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style>
-      video {
-        width: 640px;
-        height: 360px;
-      }
-    </style>
     <title>INLabTube</title>
+    <link rel="stylesheet" href="/style.css"/>
     <link rel="icon" href="/favicon.ico"/>
 
-    <!-- <script src="/js-ipfs.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/ipfs/dist/index.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/0.12.4/hls.js"></script>
     <script src="/test.min.js"></script>
+    <script>
+      function lobbyButton() {
+        window.location.href = '/';
+      }
+    </script>
   </head>
   <body>
+    <div class="menubar">
+      <div>
+        <div class="lobby" onclick="lobbyButton()">
+          <div><img src="/ipfs.jpeg"></div>
+          <div>INLabTube</div>
+        </div>
+      </div>
+    </div>
     <script>
       let state = window.location.search;
       let splitState = state.split('=');
@@ -28,7 +35,7 @@
       async function initIPFS() {
         const repoPath = 'ipfs-' + Math.random();
         const node = await Ipfs.create({repo: repoPath});
-
+        
         Hls.DefaultConfig.loader = HlsjsIpfsLoader;
         Hls.DefaultConfig.debug = false;
         if (Hls.isSupported()) {
@@ -42,7 +49,6 @@
           hls.on(Hls.Events.MANIFEST_PARSED, () => {
             const message = document.createTextNode(`${CID}`)
             status.appendChild(message)
-
             video.play();
           });
         } else {

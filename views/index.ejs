@@ -3,61 +3,48 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style>
-      .video-container {
-        cursor: pointer;
-        float: left;
-        margin: 10px;
-        width: 317px;
-        height: 230px;
-      }
-      .video-container:hover {
-        transform: scale(1.05);
-      }
-      .thumbnail {
-        width: 312px;
-        height: 177px;
-      }
-    </style>
     <title>INLabTube</title>
+    <link rel="stylesheet" href="/style.css"/>
     <link rel="icon" href="/favicon.ico"/>
 
     <script>
+      function lobbyButton() {
+        window.location.href = '/';
+      }
       function playVideo(cid) {
         window.location.href = '/player?cid=' + cid;
       }
     </script>
   </head>
   <body>
-    <div class="mainpage">
-      <div class="menubar">
-        <div>
-          INLabTube
+    <div class="menubar">
+      <div>
+        <div class="lobby" onclick="lobbyButton()">
+          <div><img src="/ipfs.jpeg"></div>
+          <div>INLabTube</div>
         </div>
       </div>
-      <div class="video-lists">
-        <div class="video-container" onclick="playVideo('QmR3zmVpKFvukuUfXQiKmQYjgiEPnnu5MqShXc9BDXg7Lc')">
-          <div><img class="thumbnail" src="/rapunzel.jpeg"></div>
-          <div>Mandy Moore - When Will My Life Begin? (From "Tangled"/Sing-Along)</div>
-        </div>
-        <div class="video-container" onclick="playVideo('QmNMqPbeey2UgEg845jCbXoYS6j4r7H8sdHECSWySXFKUC')">
-          <div><img class="thumbnail" src="/bbibbi.jpeg"></div>
-          <div>[MV] IU(아이유) _ BBIBBI(삐삐)</div>
-        </div>
-        <div class="video-container" onclick="playVideo('QmQmvv3KRePEzQ23KjmnmM7AZoD2sqepVpkmgt9Vucs4po')">
-          <!--QmQmvv3KRePEzQ23KjmnmM7AZoD2sqepVpkmgt9Vucs4po
-          bafybeibege344umk5vf3izwcelmtpserm7x73h2bdrr6ghe6r2buk4k7ya-->
-          <div><img class="thumbnail" src="/zombie.jpeg"></div>
-          <div>Day6 "Zombie" M/V</div>
-        </div>
-        <div class="video-container" onclick="playVideo('QmPcXjF3cVm1P7cei7r2xNmQq3LKLkpumN3aMnRMLbStWE')">
-          <div><img class="thumbnail" src="/holomyth.jpeg"></div>
-          <div>[Original MV] Myth or Treat - Happy Halloween - holoMyth</div>
-        </div>
-        <div class="video-container" onclick="playVideo('QmYLTeAVgiZYxoPZL8uC7WC8XVEpJcfYidWEewXkDRrsZf')">
-          <div><img class="thumbnail" src="/some.jpeg"></div>
-          <div>[MV] BOL4(볼빨간사춘기) _ Some(썸 탈꺼야)</div>
-        </div>
+    </div>
+    <div class="video-lists">
+      <div class="video-container" onclick="playVideo('QmR3zmVpKFvukuUfXQiKmQYjgiEPnnu5MqShXc9BDXg7Lc')">
+        <div><img class="thumbnail" src="/rapunzel.jpeg"></div>
+        <div>Mandy Moore - When Will My Life Begin? (From "Tangled"/Sing-Along)</div>
+      </div>
+      <div class="video-container" onclick="playVideo('QmNMqPbeey2UgEg845jCbXoYS6j4r7H8sdHECSWySXFKUC')">
+        <div><img class="thumbnail" src="/bbibbi.jpeg"></div>
+        <div>[MV] IU(아이유) _ BBIBBI(삐삐)</div>
+      </div>
+      <div class="video-container" onclick="playVideo('QmfX11CEop7W8EvQCtp13TKHHCg3pArcsi3ZXRsXoCVCKi')">
+        <div><img class="thumbnail" src="/zombie.jpeg"></div>
+        <div>Day6 "Zombie" M/V</div>
+      </div>
+      <div class="video-container" onclick="playVideo('QmPcXjF3cVm1P7cei7r2xNmQq3LKLkpumN3aMnRMLbStWE')">
+        <div><img class="thumbnail" src="/holomyth.jpeg"></div>
+        <div>[Original MV] Myth or Treat - Happy Halloween - holoMyth</div>
+      </div>
+      <div class="video-container" onclick="playVideo('QmSzVEDrm2JpBjDTppygGdpugAcMsUcJBxVM8onSWSfJFA')">
+        <div><img class="thumbnail" src="/some.jpeg"></div>
+        <div>[MV] BOL4(볼빨간사춘기) _ Some(썸 탈꺼야)</div>
       </div>
     </div>
   </body>
