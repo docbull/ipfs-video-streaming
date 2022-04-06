@@ -1,0 +1,22 @@
+.lobby {
+    cursor: pointer;
+    margin: 10px;
+}
+.video-container {
+  cursor: pointer;
+  float: left;
+  margin: 10px;
+  width: 317px;
+  height: 230px;
+}
+.video-container:hover {
+  transform: scale(1.05);
+}
+.thumbnail {
+  width: 312px;
+  height: 177px;
+}
+video {
+  width: 640px;
+  height: 360px;
+}
