@@ -1,0 +1,32 @@
+{
+  "author": "David Björklund <david@admaze.ly>",
+  "name": "headless",
+  "description": "Headless is a Node.js wrapper for Xvfb, the virtual framebuffer",
+  "version": "1.1.0",
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kesla/node-headless.git"
+  },
+  "main": "index.js",
+  "engines": {
+    "node": ">=0.6"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "bugs": {
+    "url": "https://github.com/kesla/node-headless/issues"
+  },
+  "homepage": "https://github.com/kesla/node-headless",
+  "directories": {
+    "test": "test"
+  },
+  "license": "MIT",
+  "keywords": [
+    "xvfb",
+    "headless"
+  ]
+}
