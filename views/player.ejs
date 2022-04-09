@@ -31,12 +31,17 @@
       let splitState = state.split('=');
       let CID = splitState[1];
 
+      // When this page is on, run IPFS for video streaming
       initIPFS()
       
+      // initIPFS() 
       async function initIPFS() {
         const repoPath = 'ipfs-' + Math.random();
+        let start = new Date();
         const node = await Ipfs.create({repo: repoPath});
-        
+        let end = new Date();
+        console.log(`IPFS create: ${end-start}ms`);
+
         Hls.DefaultConfig.loader = HlsjsIpfsLoader;
         Hls.DefaultConfig.debug = false;
         if (Hls.isSupported()) {
@@ -57,10 +62,6 @@
           const message = document.createTextNode('Sorry, your browser does not support HLS')
           status.appendChild(message)
         }
-      }
-
-      async function initHLS() {
-        
       }
     </script>
 
