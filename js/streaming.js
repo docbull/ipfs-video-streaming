@@ -6,7 +6,7 @@ async function initIPFS(CID) {
   let end = new Date();
   console.log(`IPFS create: ${end-start}ms`);
 
-  printBootstrapPeers(node);
+  addBootstrapPeer(node, '/ip4/203.247.240.228/tcp/4001/p2p/12D3KooWKLPAVDieCLqV4FhjRXpUZ9biPsKbWWLduBojr5doifh6');
 
   Hls.DefaultConfig.loader = HlsjsIpfsLoader;
   Hls.DefaultConfig.debug = false;
@@ -36,4 +36,11 @@ async function printBootstrapPeers(node) {
   for(let peer of peerList.Peers) {
     console.log(peer.toString());
   }
+}
+
+// addBootstrapPeer adds bootstrapping peer into the bootstrap peer list, and 
+// prints all peers' ID in the list.
+async function addBootstrapPeer(node, peerID) {
+  let res = await node.bootstrap.add(peerID);
+  printBootstrapPeers(node);
 }
