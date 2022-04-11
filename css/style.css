@@ -1,6 +1,9 @@
-.lobby {
-    cursor: pointer;
-    margin: 10px;
+.main {
+  cursor: pointer;
+  margin: 10px;
+}
+.main-logo {
+  width: 20%;
 }
 .video-container {
   cursor: pointer;
