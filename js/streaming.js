@@ -2,11 +2,22 @@
 async function initIPFS(CID) {
   const repoPath = 'ipfs-' + Math.random();
   let start = new Date();
-  const node = await Ipfs.create({repo: repoPath});
+  const node = await Ipfs.create({
+    repo: repoPath,
+    /*
+    config: {
+      Bootstrap: [
+        '/ip4/203.247.240.228/tcp/4001/p2p/12D3KooWKLPAVDieCLqV4FhjRXpUZ9biPsKbWWLduBojr5doifh6'
+      ]
+    }
+    */
+  });
   let end = new Date();
   console.log(`IPFS create: ${end-start}ms`);
 
-  addBootstrapPeer(node, '/ip4/203.247.240.228/tcp/4001/p2p/12D3KooWKLPAVDieCLqV4FhjRXpUZ9biPsKbWWLduBojr5doifh6');
+  let peerID = '/ip4/203.247.240.228/tcp/4001/p2p/12D3KooWKLPAVDieCLqV4FhjRXpUZ9biPsKbWWLduBojr5doifh6';
+
+  addBootstrapPeer(node, peerID);
 
   Hls.DefaultConfig.loader = HlsjsIpfsLoader;
   Hls.DefaultConfig.debug = false;
@@ -30,7 +41,7 @@ async function initIPFS(CID) {
   }
 }
 
-// printBootstrapPeers prints all bootstrapping peers
+// printBootstrapPeers prints all bootstrapping peers.
 async function printBootstrapPeers(node) {
   const peerList = await node.bootstrap.list();
   for(let peer of peerList.Peers) {
@@ -38,9 +49,18 @@ async function printBootstrapPeers(node) {
   }
 }
 
-// addBootstrapPeer adds bootstrapping peer into the bootstrap peer list, and 
-// prints all peers' ID in the list.
+// addBootstrapPeer adds bootstrapping peer into the bootstrap peer list.
 async function addBootstrapPeer(node, peerID) {
   let res = await node.bootstrap.add(peerID);
-  printBootstrapPeers(node);
+  console.log(res);
+}
+
+async function printSwarmPeers(node) {
+  let conn = await node.swarm.peers();
+  console.log(conn);
+}
+
+async function addSwarmPeer(node, peerID) {
+  await node.swarm.connect(peerID);
+  printSwarmPeers(node);
 }
