@@ -66,6 +66,8 @@ class HlsjsIPFSLoader {
       urlParts[urlParts.length - 1] = ""
     }
     const filename = context.url.replace(urlParts.join("/"), "")
+    console.log(`1. urlParts:${urlParts}`);
+    console.log(`2. filename:${filename}`);
 
     const options = {}
     if (Number.isFinite(context.rangeStart)) {
@@ -152,5 +154,7 @@ async function cat (cid, options, ipfs, debug, abortFlag) {
   debug(`Received data for file '${cid}' size: ${value.length} in ${parts.length} blocks`)
   return value
 }
+
+//export default HlsjsIPFSLoader
 
 exports = module.exports = HlsjsIPFSLoader
