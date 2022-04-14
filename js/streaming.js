@@ -6,35 +6,28 @@ async function initIPFS(CID) {
     repo: repoPath,
     config: {
       Bootstrap: [
-        /*
         '/dnsaddr/bootstrap.libp2p.io/p2p/QmNnooDu7bfjPFoTZYxMNLWUQJyrVwtbZg5gBMjTezGAJN',
         '/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb',
         '/dnsaddr/bootstrap.libp2p.io/p2p/QmZa1sAxajnQjVM8WjWXoMbmPd7NsWhfKsPkErzpm9wGkp',
         '/dnsaddr/bootstrap.libp2p.io/p2p/QmQCU2EcMqAqQPR2i9bChDtGNJchTbq5TbXJJ16u19uLTa',
         '/dnsaddr/bootstrap.libp2p.io/p2p/QmcZf59bWwK5XFi76CZX8cbJ4BhTzzA3gU1ZjYZcYW3dwt',
-        */
         '/dns4/node0.preload.ipfs.io/tcp/443/wss/p2p/QmZMxNdpMkewiVZLMRxaNxUeZpDUb34pWjZ1kZvsd16Zic',
-        /*
         '/dns4/node1.preload.ipfs.io/tcp/443/wss/p2p/Qmbut9Ywz9YEDrz8ySBSgWyJk41Uvm2QJPhwDJzJyGFsD6',
         '/dns4/node2.preload.ipfs.io/tcp/443/wss/p2p/QmV7gnbW5VTcJ3oyM2Xk1rdFBJ3kTkvxc87UFGsun29STS',
         '/dns4/node3.preload.ipfs.io/tcp/443/wss/p2p/QmY7JB6MQXhxHvq7dBDh4HpbH29v4yE9JRadAVpndvzySN',
-        */
         '/ip4/203.247.240.228/tcp/4001/p2p/12D3KooWKLPAVDieCLqV4FhjRXpUZ9biPsKbWWLduBojr5doifh6',
-        '/ip4/127.0.0.1/tcp/4001/p2p/12D3KooWKLPAVDieCLqV4FhjRXpUZ9biPsKbWWLduBojr5doifh6',
-        '/ip4/203.247.240.228/tcp/4001/p2p/12D3KooWKLPAVDieCLqV4FhjRXpUZ9biPsKbWWLduBojr5doifh6',
-        '/ip4/203.247.240.228/udp/4001/quic/p2p/12D3KooWKLPAVDieCLqV4FhjRXpUZ9biPsKbWWLduBojr5doifh6',
-        '/ip6/::1/tcp/4001/p2p/12D3KooWKLPAVDieCLqV4FhjRXpUZ9biPsKbWWLduBojr5doifh6',
-        '/ip6/::1/udp/4001/quic/p2p/12D3KooWKLPAVDieCLqV4FhjRXpUZ9biPsKbWWLduBojr5doifh6'
+        '/ip4/203.247.240.228/tcp/4003/ws/p2p/12D3KooWDpp2acwvwvHq3ASUQFNY13U5mNC2RhAqw8LC5iUjyqGD'
       ]
     }
   });
   let end = new Date();
   console.log(`IPFS create: ${end-start}ms`);
 
-  const peerID = '/ip4/203.247.240.228/tcp/4001/p2p/12D3KooWKLPAVDieCLqV4FhjRXpUZ9biPsKbWWLduBojr5doifh6';
+  const peerID = '/ip4/203.247.240.228/tcp/4003/ws/p2p/12D3KooWDpp2acwvwvHq3ASUQFNY13U5mNC2RhAqw8LC5iUjyqGD';
 
+  addBootstrapPeer(node, peerID);
   printSwarmAddrs(node);
-  setTimeout(() => printSwarmPeers(node), 3000);
+  setTimeout(() => localAddress(node), 3000);
 
   Hls.DefaultConfig.loader = HlsjsIpfsLoader;
   Hls.DefaultConfig.debug = false;
