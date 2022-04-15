@@ -12232,6 +12232,8 @@ var FragmentLoader = /** @class */ (function (_super) {
             config.fLoader ? new FragmentILoader(config) : new DefaultILoader(config);
         var loaderContext, loaderConfig, loaderCallbacks;
         loaderContext = { url: frag.url, frag: frag, responseType: 'arraybuffer', progressData: false };
+        // docbull watson.
+        // console.log('onFragLoading();', data);
         var start = frag.byteRangeStartOffset, end = frag.byteRangeEndOffset;
         if (Number.isFinite(start) && Number.isFinite(end)) {
             loaderContext.rangeStart = start;
@@ -12249,8 +12251,6 @@ var FragmentLoader = /** @class */ (function (_super) {
             onTimeout: this.loadtimeout.bind(this),
             onProgress: this.loadprogress.bind(this)
         };
-        // docbull watson.
-        console.log('fragment_loader_FragmentLoader');
         loader.load(loaderContext, loaderConfig, loaderCallbacks);
     };
     FragmentLoader.prototype.loadsuccess = function (response, stats, context, networkDetails) {
@@ -12343,6 +12343,8 @@ var Fragment = /** @class */ (function () {
         get: function () {
             if (!this._url && this.relurl) {
                 this._url = URLToolkit.buildAbsoluteURL(this.baseurl, this.relurl, { alwaysNormalize: true });
+                // docbull watson.
+                console.log("_url:", this._url);
             }
             return this._url;
         },
@@ -12823,7 +12825,9 @@ var M3U8Parser = /** @class */ (function () {
                     frag.urlId = levelUrlId;
                     frag.baseurl = baseurl;
                     // avoid sliced strings    https://github.com/video-dev/hls.js/issues/939
+                    // docbull watson. -> frag.relurl indicates all video chunk files' name
                     frag.relurl = (' ' + result[3]).slice(1);
+                    console.log(`${frag.relurl}`);
                     assignProgramDateTime(frag, prevFrag);
                     level.fragments.push(frag);
                     prevFrag = frag;
