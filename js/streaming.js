@@ -25,9 +25,9 @@ async function initIPFS(CID) {
 
   const peerID = '/ip4/203.247.240.228/tcp/4003/ws/p2p/12D3KooWDpp2acwvwvHq3ASUQFNY13U5mNC2RhAqw8LC5iUjyqGD';
 
-  addBootstrapPeer(node, peerID);
-  printSwarmAddrs(node);
-  setTimeout(() => localAddress(node), 3000);
+  //addBootstrapPeer(node, peerID);
+  //printSwarmAddrs(node);
+  //setTimeout(() => localAddress(node), 3000);
 
   Hls.DefaultConfig.loader = HlsjsIpfsLoader;
   Hls.DefaultConfig.debug = false;
@@ -67,6 +67,7 @@ async function addBootstrapPeer(node, peerID) {
   console.log('added peer:', res.Peers.toString());
 }
 
+// printSwarmPeers shows connected IPFS nodes in swarm.
 async function printSwarmPeers(node) {
   const conn = await node.swarm.peers();
   console.log('--- Connected Swarm Peers ---');
@@ -76,6 +77,8 @@ async function printSwarmPeers(node) {
   console.log('-----------------------------');
 }
 
+// printSwarmAddrs shows IPFS bootstrap nodes' multi-addresses even they
+// are not connected.
 async function printSwarmAddrs(node) {
   const peerInfos = await node.swarm.addrs();
   console.log('-------- Swarm Addrs --------');
@@ -86,11 +89,7 @@ async function printSwarmAddrs(node) {
   console.log('-----------------------------');
 }
 
+// addSwarmPeer tries to connect with IPFS peer
 async function addSwarmPeer(node, peerID) {
   await node.swarm.connect(peerID);
-}
-
-async function localAddress(node) {
-  const multiAddrs = await node.swarm.localAddrs();
-  console.log(multiAddrs);
 }
