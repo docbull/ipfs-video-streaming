@@ -25,7 +25,6 @@ app.engine('html', require('ejs').renderFile);
 app.use(express.static(path.join(__dirname, '/img')));
 app.use(express.static(path.join(__dirname, '/js')));
 app.use(express.static(path.join(__dirname, '/css')));
-app.use(express.static(path.join(__dirname, '/test')));
 
 app.get('/', (req, res) => { res.json({ message: `Server is running on port ${req.secure ? HTTPS_PORT : HTTP_PORT}` }); }); 
 
