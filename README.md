@@ -13,18 +13,18 @@ You need to setup `SSL` for running `HTTPS` service. The web page to playback th
 Here is an instruction:
 
 ```
-    openssl ecparam -out rootca.key -name prime256v1 -genkey
-    cat rootca.key s
-    openssl req -new -sha256 -key rootca.key -out rootca.csr
-    cat rootca.
-    cat rootca.csr 
-    openssl x509 -req -sha256 -days 999999 -in rootca.csr -signkey rootca.key -out rootca.crt
+$ openssl ecparam -out rootca.key -name prime256v1 -genkey
+$ cat rootca.key
+$ openssl req -new -sha256 -key rootca.key -out rootca.csr
+$ cat rootca.
+$ cat rootca.csr 
+$ openssl x509 -req -sha256 -days 999999 -in rootca.csr -signkey rootca.key -out rootca.crt
 ```
 
-Before you install `mkcert`, you need to install `brew` or `homebrew` first. There is an install instruction for `mkcert`:
+Before you install `mkcert`, you need to installation `brew` or `homebrew` first. There is an install instruction for `mkcert`:
 
 ```
-    brew install mkcert
-    mkcert -install
-    mkcert localhost
+$ brew install mkcert
+$ mkcert -install
+$ mkcert localhost
 ```
