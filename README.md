@@ -21,7 +21,7 @@ $ cat rootca.csr
 $ openssl x509 -req -sha256 -days 999999 -in rootca.csr -signkey rootca.key -out rootca.crt
 ```
 
-Before you install `mkcert`, you need to installation `brew` or `homebrew` first. There is an install instruction for `mkcert`:
+Before you install `mkcert`, you need to install `brew` or `homebrew` first.
 
 ```
 $ brew install mkcert
