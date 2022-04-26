@@ -14,15 +14,55 @@
       function playVideo(cid) {
         window.location.href = '/player?cid=' + cid;
       }
+      async function connectWalletPressed() {
+        if (window.ethereum) {
+          try {
+            const addressArray = await window.ethereum.request({
+              method: "eth_requestAccounts",
+            });
+            if (addressArray.length > 0) {
+              console.log("🦊 MetaMask connected!");
+              document.getElementById('walletButton').src = "/MetaMask_Logged_In.png";
+            } else {
+              console.log("🦊 Please connect to MetaMask using the top-right button.");
+            }
+          } catch (error) {
+            console.log("😥 Something went wrong." + error);
+          }
+        }
+      }
+    </script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (window.ethereum) {
+          try {
+            const addressArray = await window.ethereum.request({
+              method: "eth_accounts",
+            });
+            if (addressArray.length > 0) {
+              console.log("🦊 MetaMask connected!");
+              document.getElementById('walletButton').src = "/MetaMask_Logged_In.png";
+            } else {
+              console.log("🦊 Please connect to MetaMask using the top-right button.");
+              document.getElementById('walletButton').src = "/MetaMask_Logged_Out.png";
+            }
+          } catch (error) {
+            console.log("😢 " + error);
+          }
+        } else {
+          console.log("You need to install MetaMask");
+        }
+      });
     </script>
   </head>
   <body>
     <div class="menubar">
-      <div>
-        <div class="main" onclick="mainButton()">
-          <div><img class="main-logo" src="/logo.jpg"></div>
-          <div>INLabTube</div>
-        </div>
+      <div id="logo" class="logo" onclick="mainButton()">
+        <img class="main-logo" src="/logo.jpg">
+      </div>
+      <div id="metamask" class="Minter">
+        <img id="walletButton" float="right" onClick="connectWalletPressed()">
       </div>
     </div>
     <div class="video-lists">
