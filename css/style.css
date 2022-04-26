@@ -1,9 +1,10 @@
-.main {
+.logo {
   cursor: pointer;
   margin: 10px;
+  width: 300px;
 }
 .main-logo {
-  width: 20%;
+  width: 200px;
 }
 .video-container {
   cursor: pointer;
@@ -17,8 +18,20 @@
 }
 .thumbnail {
   width: 312px;
-  height: 177px;
 }
+
+#logo, #metamask {
+  display: inline;
+}
+#walletButton {
+  cursor: pointer;
+  width: 50px;
+  float: right;
+}
+#walletButton:hover {
+  transform: scale(1.05);
+}
+
 video {
   width: 640px;
   height: 360px;
