@@ -18,7 +18,7 @@ On the process:
 ## localhost example
 [This sample](https://github.com/docbull/ipfs-video-streaming/tree/main/localhost-hls-streaming) lets you experience IPFS-based HLS video streaming. It's based on [JS-IPFS example](https://github.com/ipfs-examples/js-ipfs-examples/tree/master/examples/browser-video-streaming).
 
-# Quick Start
+### Quick Start
 ```
 # run this example
 $ npm start
@@ -29,7 +29,7 @@ It opens `8888 port` for running example, and you can see download latency of ea
 ## Web Server based Streaming Service
 
 
-# How to setup HTTPS for express based web server
+### How to setup HTTPS for express based web server
 
 You need to setup `SSL` for running `HTTPS` service. The web page to playback the videos in this project requires HTML file from web server. However, if you run web server on `HTTP` or `localhost`, the contents may be blocked by web browsers, such as `chrome`, `safari`, `firefox`, and `brave`, because there is a security policy called `CORS`. Fortunately, you can build HTTPS using simple ceritifications.
 
