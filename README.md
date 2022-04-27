@@ -11,11 +11,11 @@ On the process:
 - `NFT` When user uploads a video on the web app, minty metadata of the video using `Ropsten Test Network`.
 - `IPFS scheduling` ...
 
-## Contents
+# Contents
 - [localhost example](#localhost-example)
 - [Web Server based Streaming Service](#web-server-based-streaming-service)
 
-## localhost example
+# localhost example
 [This sample](https://github.com/docbull/ipfs-video-streaming/tree/main/localhost-hls-streaming) lets you experience IPFS-based HLS video streaming. It's based on [JS-IPFS example](https://github.com/ipfs-examples/js-ipfs-examples/tree/master/examples/browser-video-streaming).
 
 ### Quick Start
@@ -26,7 +26,7 @@ $ npm start
 
 It opens `8888 port` for running example, and you can see download latency of each video chunk in the browser console.
 
-## Web Server based Streaming Service
+# Web Server based Streaming Service
 
 
 ### How to setup HTTPS for express based web server
