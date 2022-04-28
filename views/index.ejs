@@ -22,7 +22,7 @@
             });
             if (addressArray.length > 0) {
               console.log("🦊 MetaMask connected!");
-              document.getElementById('walletButton').src = "/MetaMask_Logged_In.png";
+              document.getElementById('walletButton').src = "/metamask_connected.png";
             } else {
               console.log("🦊 Please connect to MetaMask using the top-right button.");
             }
@@ -42,10 +42,10 @@
             });
             if (addressArray.length > 0) {
               console.log("🦊 MetaMask connected!");
-              document.getElementById('walletButton').src = "/MetaMask_Logged_In.png";
+              document.getElementById('walletButton').src = "/metamask_connected.png";
             } else {
               console.log("🦊 Please connect to MetaMask using the top-right button.");
-              document.getElementById('walletButton').src = "/MetaMask_Logged_Out.png";
+              document.getElementById('walletButton').src = "/metamask_disconnected.png";
             }
           } catch (error) {
             console.log("😢 " + error);
@@ -62,7 +62,7 @@
         <img class="main-logo" src="/logo.jpg">
       </div>
       <div id="metamask" class="Minter">
-        <img id="walletButton" float="right" onClick="connectWalletPressed()">
+        <img id="walletButton" title="MetaMask Wallet" float="right" onClick="connectWalletPressed()">
       </div>
     </div>
     <div class="video-lists">
