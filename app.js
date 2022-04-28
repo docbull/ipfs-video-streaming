@@ -14,8 +14,6 @@ const options = {
 
 const app = express();
 
-const file = './views/index.ejs';
-
 const router = require('./routes/router')(app);
 
 app.set('view engine', 'ejs');
@@ -25,8 +23,6 @@ app.engine('html', require('ejs').renderFile);
 app.use(express.static(path.join(__dirname, '/img')));
 app.use(express.static(path.join(__dirname, '/js')));
 app.use(express.static(path.join(__dirname, '/css')));
-
-app.get('/', (req, res) => { res.json({ message: `Server is running on port ${req.secure ? HTTPS_PORT : HTTP_PORT}` }); }); 
 
 http.createServer(app).listen(HTTP_PORT);
 https.createServer(options, app).listen(HTTPS_PORT);
