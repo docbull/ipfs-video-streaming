@@ -20,7 +20,7 @@ On the process:
 
 ### Quick Start
 ```
-# run this example
+$ cd localhost-hls-streaming
 $ npm start
 ```
 
