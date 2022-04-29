@@ -29,7 +29,7 @@ It opens `8888 port` for running example, and you can see download latency of ea
 ## Web Server based Streaming Service
 
 
-### How to setup HTTPS for express based web server
+### Prerequisites
 
 You need to setup `SSL` for running `HTTPS` service. The web page to playback the videos in this project requires HTML file from web server. However, if you run web server on `HTTP` or `localhost`, the contents may be blocked by web browsers, such as `chrome`, `safari`, `firefox`, and `brave`, because there is a security policy called `CORS`. Fortunately, you can build HTTPS using simple ceritifications.
 
