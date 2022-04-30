@@ -6,6 +6,9 @@
 .main-logo {
   width: 200px;
 }
+.menubar {
+  height: 100px;
+}
 .video-container {
   cursor: pointer;
   float: left;
@@ -20,8 +23,19 @@
   width: 312px;
 }
 
-#logo, #metamask {
+#logo, #uploader, #metamask {
   display: inline;
+}
+#logo {
+  float: left;
+}
+#uploadButton {
+  cursor: pointer;
+  width: 70px;
+  float: right;
+}
+#uploadButton:hover {
+  transform: scale(1.05);
 }
 #walletButton {
   cursor: pointer;
