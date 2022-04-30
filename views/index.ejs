@@ -14,55 +14,24 @@
       function playVideo(cid) {
         window.location.href = '/player?cid=' + cid;
       }
-      async function connectWalletPressed() {
-        if (window.ethereum) {
-          try {
-            const addressArray = await window.ethereum.request({
-              method: "eth_requestAccounts",
-            });
-            if (addressArray.length > 0) {
-              console.log("🦊 MetaMask connected!");
-              document.getElementById('walletButton').src = "/metamask_connected.png";
-            } else {
-              console.log("🦊 Please connect to MetaMask using the top-right button.");
-            }
-          } catch (error) {
-            console.log("😥 Something went wrong." + error);
-          }
-        }
+      function uploadVideo() {
+        window.location.href = '/upload';
       }
     </script>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", async () => {
-        if (window.ethereum) {
-          try {
-            const addressArray = await window.ethereum.request({
-              method: "eth_accounts",
-            });
-            if (addressArray.length > 0) {
-              console.log("🦊 MetaMask connected!");
-              document.getElementById('walletButton').src = "/metamask_connected.png";
-            } else {
-              console.log("🦊 Please connect to MetaMask using the top-right button.");
-              document.getElementById('walletButton').src = "/metamask_disconnected.png";
-            }
-          } catch (error) {
-            console.log("😢 " + error);
-          }
-        } else {
-          console.log("You need to install MetaMask");
-        }
-      });
-    </script>
+    <script type="text/javascript" src="/metamask.js"></script>
   </head>
   <body>
     <div class="menubar">
       <div id="logo" class="logo" onclick="mainButton()">
         <img class="main-logo" src="/logo.jpg">
       </div>
-      <div id="metamask" class="Minter">
-        <img id="walletButton" title="MetaMask Wallet" float="right" onClick="connectWalletPressed()">
+      <div id="uploader" class="upload" onclick="uploadVideo()">
+        <div>
+          <img id="uploadButton" src="/orca.png">
+        </div>
+      </div>
+      <div id="metamask" class="Minter" onClick="connectWalletPressed()">
+        <img id="walletButton" title="MetaMask Wallet">
       </div>
     </div>
     <div class="video-lists">
