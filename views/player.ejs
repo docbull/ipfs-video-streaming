@@ -8,9 +8,11 @@
     <link rel="icon" href="/favicon.ico"/>
 
     <script src="https://cdn.jsdelivr.net/npm/ipfs/dist/index.min.js"></script>
+    <!-- <script src="/ipfs-core.min.js"></script> -->
     <script src="/cdnhls.js"></script>
-    <script src="/hlsjs-ipfs-loader.min.js"></script>
+    <script src="/test.min.js"></script>
     <script type="text/javascript" src="/streaming.js"></script>
+    <script type="text/javascript" src="/metamask.js"></script>
     <script>
       function mainButton() {
         window.location.href = '/';
@@ -19,20 +21,20 @@
   </head>
   <body>
     <div class="menubar">
-      <div>
-        <div class="main" onclick="mainButton()">
-          <div><img class="main-logo" src="/logo.jpg"></div>
-          <div>INLabTube</div>
-        </div>
+      <div id="logo" class="logo" onclick="mainButton()">
+        <img class="main-logo" src="/logo.jpg">
       </div>
-    </div>
+      <div id="metamask" class="Minter">
+        <img id="walletButton" title="MetaMask Wallet" float="right" onClick="connectWalletPressed()">
+      </div>
+    </div></br>
     <script>
       let state = window.location.search;
       let splitState = state.split('=');
       let CID = splitState[1];
 
       // When this page is on, run IPFS for video streaming
-      initIPFS(CID)
+      initIPFS(CID);
     </script>
 
     <video id="video" controls autoplay></video>
