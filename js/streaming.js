@@ -4,30 +4,9 @@ async function initIPFS(CID) {
   let start = new Date();
   const node = await Ipfs.create({
     repo: repoPath,
-    config: {
-      Bootstrap: [
-        '/dnsaddr/bootstrap.libp2p.io/p2p/QmNnooDu7bfjPFoTZYxMNLWUQJyrVwtbZg5gBMjTezGAJN',
-        '/dnsaddr/bootstrap.libp2p.io/p2p/QmbLHAnMoJPWSCR5Zhtx6BHJX9KiKNN6tpvbUcqanj75Nb',
-        '/dnsaddr/bootstrap.libp2p.io/p2p/QmZa1sAxajnQjVM8WjWXoMbmPd7NsWhfKsPkErzpm9wGkp',
-        '/dnsaddr/bootstrap.libp2p.io/p2p/QmQCU2EcMqAqQPR2i9bChDtGNJchTbq5TbXJJ16u19uLTa',
-        '/dnsaddr/bootstrap.libp2p.io/p2p/QmcZf59bWwK5XFi76CZX8cbJ4BhTzzA3gU1ZjYZcYW3dwt',
-        '/dns4/node0.preload.ipfs.io/tcp/443/wss/p2p/QmZMxNdpMkewiVZLMRxaNxUeZpDUb34pWjZ1kZvsd16Zic',
-        '/dns4/node1.preload.ipfs.io/tcp/443/wss/p2p/Qmbut9Ywz9YEDrz8ySBSgWyJk41Uvm2QJPhwDJzJyGFsD6',
-        '/dns4/node2.preload.ipfs.io/tcp/443/wss/p2p/QmV7gnbW5VTcJ3oyM2Xk1rdFBJ3kTkvxc87UFGsun29STS',
-        '/dns4/node3.preload.ipfs.io/tcp/443/wss/p2p/QmY7JB6MQXhxHvq7dBDh4HpbH29v4yE9JRadAVpndvzySN',
-        '/ip4/203.247.240.228/tcp/4001/p2p/12D3KooWKLPAVDieCLqV4FhjRXpUZ9biPsKbWWLduBojr5doifh6',
-        '/ip4/203.247.240.228/tcp/4003/ws/p2p/12D3KooWDpp2acwvwvHq3ASUQFNY13U5mNC2RhAqw8LC5iUjyqGD'
-      ]
-    }
   });
   let end = new Date();
   console.log(`IPFS create: ${end-start}ms`);
-
-  const peerID = '/ip4/203.247.240.228/tcp/4003/ws/p2p/12D3KooWDpp2acwvwvHq3ASUQFNY13U5mNC2RhAqw8LC5iUjyqGD';
-
-  //addBootstrapPeer(node, peerID);
-  //printSwarmAddrs(node);
-  //setTimeout(() => localAddress(node), 3000);
 
   Hls.DefaultConfig.loader = HlsjsIpfsLoader;
   Hls.DefaultConfig.debug = false;
@@ -40,15 +19,20 @@ async function initIPFS(CID) {
     hls.loadSource('master.m3u8');
     hls.attachMedia(video);
     hls.on(Hls.Events.MANIFEST_PARSED, () => {
-      const message = document.createTextNode(`${CID}`)
-      status.appendChild(message)
+      const message = document.createTextNode(`${CID}`);
+      status.appendChild(message);
       video.play();
     });
   } else {
     const status = document.getElementById('status');
-    const message = document.createTextNode('Sorry, your browser does not support HLS')
-    status.appendChild(message)
+    const message = document.createTextNode('Sorry, your browser does not support HLS');
+    status.appendChild(message);
   }
+}
+
+async function printBitswapStat(node) {
+  const stats = node.bitswap.stat();
+  console.log("🗂", stats);
 }
 
 // printBootstrapPeers prints all bootstrapping peers.
@@ -93,3 +77,24 @@ async function printSwarmAddrs(node) {
 async function addSwarmPeer(node, peerID) {
   await node.swarm.connect(peerID);
 }
+
+document.addEventListener("DOMContentLoaded", async () => {
+  if (window.ethereum) {
+    try {
+      const addressArray = await window.ethereum.request({
+        method: "eth_accounts",
+      });
+      if (addressArray.length > 0) {
+        console.log("🦊 MetaMask connected!");
+        document.getElementById('walletButton').src = "/metamask_connected.png";
+      } else {
+        console.log("🦊 Please connect to MetaMask using the top-right button.");
+        document.getElementById('walletButton').src = "/metamask_disconnected.png";
+      }
+    } catch (error) {
+      console.log("😢 " + error);
+    }
+  } else {
+    console.log("You need to install MetaMask");
+  }
+});
