@@ -8,10 +8,12 @@
     "start": "npx nodemon app.js --exec babel-node"
   },
   "dependencies": {
+    "@alch/alchemy-web3": "^1.4.1",
     "browserify": "^17.0.0",
     "cors": "^2.8.5",
     "ejs": "^3.1.6",
     "express": "^4.17.3",
+    "ffmpeg.js": "^4.2.9003",
     "hls.js": "^1.1.5",
     "hlsjs-ipfs-loader": "^0.3.1",
     "ipfs": "^0.62.1",
