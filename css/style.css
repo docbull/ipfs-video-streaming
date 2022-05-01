@@ -22,6 +22,11 @@
 .thumbnail {
   width: 312px;
 }
+.closeButton {
+  width: 2%;
+  height: 2%;
+  float: right;
+}
 
 #logo, #uploader, #metamask {
   display: inline;
@@ -44,6 +49,18 @@
 }
 #walletButton:hover {
   transform: scale(1.05);
+}
+#overlay{
+  position: fixed;
+  display: none;
+  width: 70%;
+  height: 70%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color:aliceblue;
+  z-index: 2;
 }
 
 video {
