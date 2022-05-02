@@ -7,31 +7,44 @@
     <link rel="stylesheet" href="/style.css"/>
     <link rel="icon" href="/favicon.ico"/>
 
-    <script>
-      function mainButton() {
-        window.location.href = '/';
-      }
-      function playVideo(cid) {
-        window.location.href = '/player?cid=' + cid;
-      }
-      function uploadVideo() {
-        window.location.href = '/upload';
-      }
-    </script>
+    <script src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="/metamask.js"></script>
+    <script type="text/javascript" src="/front.js"></script>
   </head>
   <body>
-    <div class="menubar">
-      <div id="logo" class="logo" onclick="mainButton()">
-        <img class="main-logo" src="/logo.jpg">
-      </div>
-      <div id="uploader" class="upload" onclick="uploadVideo()">
-        <div>
-          <img id="uploadButton" src="/orca.png">
+    <div id="overlay">
+        <div id="overlay-contents">
+          <div id="close-video-upload">
+            <input type="image" class="close-button" src="/close-button.png" onclick="off()">
+          </div>
+          <div id="uploading-layer">
+            <div id="uploading-functions">
+              <div id="video-uploader">
+                <form id="upload-form" method="POST" action="/upload" enctype="multipart/form-data">
+                  <div>
+                    <input type="file" id="select-video" name="uploading" accept="video/mp4" capture style="display:none"/>
+                    <img src="/select-video.png" id="select-video-button">
+                  </div>
+                  <div id="video-submit-button">
+                    <input type="submit">
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
+    </div>
+    <div id="menubar">
+      <div id="logo" onclick="mainButton()">
+        <img id="main-button" src="/logo.jpg">
       </div>
       <div id="metamask" class="Minter" onClick="connectWalletPressed()">
         <img id="walletButton" title="MetaMask Wallet">
+      </div>
+      <div id="uploader" class="upload" onclick="on()">
+        <div>
+          <img id="uploadButton" src="/upload.png">
+        </div>
       </div>
     </div>
     <div class="video-lists">

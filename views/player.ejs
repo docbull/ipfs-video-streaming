@@ -8,26 +8,48 @@
     <link rel="icon" href="/favicon.ico"/>
 
     <script src="https://cdn.jsdelivr.net/npm/ipfs/dist/index.min.js"></script>
-    <!-- <script src="/ipfs-core.min.js"></script> -->
     <script src="/cdnhls.js"></script>
-    <script src="/test.min.js"></script>
+    <script src="/hlsjs-ipfs-loader.min.js"></script>
     <script type="text/javascript" src="/streaming.js"></script>
     <script type="text/javascript" src="/metamask.js"></script>
-    <script>
-      function mainButton() {
-        window.location.href = '/';
-      }
-    </script>
+    <script type="text/javascript" src="/front.js"></script>
   </head>
   <body>
-    <div class="menubar">
-      <div id="logo" class="logo" onclick="mainButton()">
-        <img class="main-logo" src="/logo.jpg">
+    <div id="overlay">
+      <div id="overlay-contents">
+        <div id="close-video-upload">
+          <input type="image" class="close-button" src="/close-button.png" onclick="off()">
+        </div>
+        <div id="uploading-layer">
+          <div id="uploading-functions">
+            <div id="video-uploader">
+              <form id="upload-banner" enctype="multipart/form-data" method="post" action="#">
+                <div>
+                  <input type="file" id="select-video" name="uploading" capture style="display:none"/>
+                  <img src="/select-video.png" id="select-video-button">
+                </div>
+                <div id="video-submit-button">
+                  <input type="submit">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
-      <div id="metamask" class="Minter">
-        <img id="walletButton" title="MetaMask Wallet" float="right" onClick="connectWalletPressed()">
+    </div>
+    <div id="menubar">
+      <div id="logo" onclick="mainButton()">
+        <img id="main-button" src="/logo.jpg">
       </div>
-    </div></br>
+      <div id="metamask" class="Minter" onClick="connectWalletPressed()">
+        <img id="walletButton" title="MetaMask Wallet">
+      </div>
+      <div id="uploader" class="upload" onclick="on()">
+        <div>
+          <img id="uploadButton" src="/upload.png">
+        </div>
+      </div>
+    </div>
     <script>
       let state = window.location.search;
       let splitState = state.split('=');
