@@ -3,6 +3,8 @@ const path = require('path');
 const http = require('http');
 const https = require('https');
 const fs = require('fs');
+const cors = require('cors');
+const fileUpload = require('express-fileupload');
 
 const HTTP_PORT = 8888;
 const HTTPS_PORT = 11800;
@@ -13,6 +15,9 @@ const options = {
 };
 
 const app = express();
+//Cross-Origin Resource Sharing (CORS) is an HTTP-header based mechanism that allows a server to indicate any origins
+app.use(cors());
+app.use(fileUpload());
 
 const router = require('./routes/router')(app);
 
@@ -21,9 +26,11 @@ app.set('views', path.join(__dirname, '/views'));
 app.engine('html', require('ejs').renderFile);
 
 app.use(express.static(path.join(__dirname, '/img')));
-app.use(express.static(path.join(__dirname, '/js')));
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(express.static(path.join(__dirname, '/public/nft')));
+app.use(express.static(path.join(__dirname, '/public/uploader')));
+app.use(express.static(path.join(__dirname, '/public/streaming')));
+app.use(express.static(path.join(__dirname, '/public/php')));
 app.use(express.static(path.join(__dirname, '/css')));
 
 http.createServer(app).listen(HTTP_PORT);
