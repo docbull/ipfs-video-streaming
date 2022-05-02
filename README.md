@@ -8,8 +8,6 @@ It contains `JS-IPFS`, `HLS.js`, and `HLSjs-IPFS-Loader` modules.
 
 On the process:
 - `Video uploader` When user uploads a video on the web app, it encodes the video into several chunks using `HLS`, and then it uploads to IPFS network using `Web3.Storage`, one of the famous Filecoin-backed Pinning Services, for the use of permanent storage.
-- `NFT` When user uploads a video on the web app, minty metadata of the video using `Ropsten Test Network`.
-- `IPFS scheduling` ...
 
 ## Contents
 - [localhost example](#localhost-example)
