@@ -1,4 +1,4 @@
-import { uploader } from '../public/uploading/uploader.js';
+import { uploader } from '../public/uploader.js';
 
 module.exports = function (app) {
     app.get('/', function(req, res) {
