@@ -27,10 +27,8 @@ app.engine('html', require('ejs').renderFile);
 
 app.use(express.static(path.join(__dirname, '/img')));
 app.use(express.static(path.join(__dirname, '/public')));
-app.use(express.static(path.join(__dirname, '/public/nft')));
-app.use(express.static(path.join(__dirname, '/public/uploader')));
 app.use(express.static(path.join(__dirname, '/public/streaming')));
-app.use(express.static(path.join(__dirname, '/public/php')));
+app.use(express.static(path.join(__dirname, '/public/uploading')));
 app.use(express.static(path.join(__dirname, '/css')));
 
 http.createServer(app).listen(HTTP_PORT);
