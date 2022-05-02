@@ -20,9 +20,22 @@ function execac(command, args) {
     })
 }
 
-async function packageToDash(fileInfo) {
-    const rootPath = path.join(__dirname, 'data', fileInfo.title, fileInfo.mpdName);
-    const filePath = path.join(__dirname, 'data', `${fileInfo.fileName}.${fileInfo.ext}`);
+// async function encodeHLS(fileInfo) {
+//     const args = [
+//         '-i', `${fileInfo.title}.${fileInfo.ext}`,
+//         '-profile:v', 'baseline',
+//         '-level', '3.0',
+//         '-start_number', '0',
+//         '-hls_time', '2',
+//         '-hls_list_size', '0',
+//         '-f', 'hls',
+//         'master.m3u8'
+//     ];
+//     const result = await execac('ffmpeg', args);
+//     console.log(result);
+// }
+
+exports.encodeHLS = async function (fileInfo) {
     const args = [
         '-i', `${fileInfo.title}.${fileInfo.ext}`,
         '-profile:v', 'baseline',
@@ -32,16 +45,14 @@ async function packageToDash(fileInfo) {
         '-hls_list_size', '0',
         '-f', 'hls',
         'master.m3u8'
-
     ];
     const result = await execac('ffmpeg', args);
     console.log(result);
 }
 
-const file = ({
+const testFileInfo = ({
     title: "bae",
-    mpdName: "dash.mpd",
     ext: "mp4"
 });
 
-packageToDash(file);
+//encodeHLS(testFileInfo);
