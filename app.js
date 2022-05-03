@@ -6,8 +6,8 @@ const fs = require('fs');
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
 
-const HTTP_PORT = 8888;
-const HTTPS_PORT = 11800;
+const HTTP_PORT = 8000;
+const HTTPS_PORT = 8080;
 
 const options = {
     key: fs.readFileSync('./ssl/rootca.key'),
