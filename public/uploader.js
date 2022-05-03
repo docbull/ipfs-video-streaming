@@ -3,8 +3,11 @@ import execa from 'execa';
 import fs from 'fs-extra';
 import process from 'process';
 import dotenv from 'dotenv';
+import json2csv from 'json2csv';
 import { Web3Storage, getFilesFromPath } from 'web3.storage';
 dotenv.config();
+
+let filePaths = [];
 
 function execac(command, args) {
     return new Promise((resolve, reject) => {
@@ -25,8 +28,40 @@ function execac(command, args) {
     })
 }
 
+// updateVideoLists updates uploaded video lists as CSV file
+async function updateVideoLists(fileName, fields, data) {
+    let jsonCSV = json2csv.parse;
+    const filename = path.join(__dirname, `${fileName}`);
+
+    let rows;
+    if (!fs.existsSync(filename)) {
+        rows = jsonCSV(data, { header: true });
+    } else {
+        rows = jsonCSV(data, { header: false });
+    }
+    fs.appendFileSync(filename, rows);
+    fs.appendFileSync(filename, '\r\n');
+}
+
+async function readDirectory(filePath, fileInfo) {
+    const fsPromises = fs.promises;
+    let fileDir = `${filePath}${fileInfo.title}/`;
+    
+    return new Promise((resolve, reject) => {
+        fs.readdir(path.join(filePath, fileInfo.title), (err, files) => {
+            if (files) {
+                files.forEach(file => {
+                    filePaths.push(fileDir+file);
+                });
+                resolve('successfully read the directory');
+            }
+        });
+
+    });
+}
+
 // Web3StorageUploader uploads video chunks into IPFS network using Web3.Storage.
-async function Web3StorageUploader(web3Token, filePaths) {
+async function Web3StorageUploader(web3Token, fileInfo, filePath) {
     const token = web3Token;
 
     if (!token) {
@@ -46,18 +81,34 @@ async function Web3StorageUploader(web3Token, filePaths) {
 
     console.log(`📤 Uploading ${files.length} files`);
     const cid = await storage.put(files);
-    console.log('📦 Content added with CIDv1:', `"${cid}"`);
     const { stdout } = await execa(`ipfs`, [`cid`, `format`, `-f`, `"%M"`, `-b`, `base58btc`, `${cid}`]);
-    console.log('📦 Content added with CIDv0:', stdout);
+    console.log(`📦 Video chunks are added with CIDv1: "${cid}" and CIDv0: ${stdout}`);
+
+    const fields = [fileInfo.title, fileInfo.CID, fileInfo.thumbnail];
+    const data = [{
+        title: fileInfo.title,
+        CID: cid,
+        thumbnail: `${fileInfo.thumbnail}`
+    }];
+    await updateVideoLists('./video-list.csv', fields, data);
+
     console.log('🎉 The video is successfully uploaded!');
 }
 
-// encodesHLS encodes the video using HLS protocol based on ffmpeg that installed in media server. 
+// IPFSUploader uploads video chunks to IPFS network using Web3.Storage, a Filecoin-backed
+// Pinning Service
+async function IPFSUploader(web3Token, fileInfo, filePath) {
+    await readDirectory(filePath, fileInfo)
+        .then(result => Web3StorageUploader(web3Token, fileInfo, filePath));
+}
+
+// encodesHLS encodes the video using HLS protocol based on ffmpeg that installed in media server
 async function encodeHLS(fileInfo, filePath) {
     const workingDir = `${filePath}${fileInfo.title}`
     let args = [
         `${filePath}${fileInfo.title}`
     ];
+    // make a directory that has same name of the uploaded video title
     execac('mkdir', args);
     args = [
         '-i', `${filePath}${fileInfo.video}`,
@@ -69,25 +120,13 @@ async function encodeHLS(fileInfo, filePath) {
         '-f', 'hls',
         `${workingDir}/master.m3u8`
     ];
-    const result = await execac('ffmpeg', args);
-    console.log(result);
+    await execac('ffmpeg', args);
 }
 
 exports.uploader = async function (fileInfo) {
     const filePath = path.join(__dirname, '../data/');
     const web3Token = process.env.Web3Token;
 
-    let fileDir = `${filePath}${fileInfo.title}/`;
-    let filePaths = [];
-    fs.readdir(path.join(filePath, fileInfo.title), (err, files) => {
-        if (files) {
-            files.forEach(file => {
-                console.log(file);
-                filePaths.push(fileDir+file);
-            });
-        }
-    });
-
     await encodeHLS(fileInfo, filePath)
-        .then(result => Web3StorageUploader(web3Token, filePaths));
+        .then(result => IPFSUploader(web3Token, fileInfo, filePath));
 }
