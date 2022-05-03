@@ -13,21 +13,31 @@ module.exports = function (app) {
     app.post('/upload', async (req, res) => {
         if (req.files) {
             console.log(req.files);
-            var file = req.files.uploading;
-            var filename = file.name;
-            let title = filename.split('.');
-            file.mv('./data/' + filename, function (err) {
+            const video = req.files.uploading;
+            const thumbnail = req.files.thumbnail;
+            var videoName = video.name;
+            var thumbnailName = thumbnail.name;
+            let title = videoName.split('.');
+            video.mv(`./data/${videoName}`, function (err) {
                 if (err) {
                     res.render('index.ejs');
                     console.log(err);
                 } else {
-                    // fileInfo indicates information of uploaded video. It contains filename 
-                    // (e.g., example.mp4) and title (e.g., example).
-                    const fileInfo = ({
-                        video: filename,
-                        title: title[0]
-                    })
-                    uploader(fileInfo).then(result => res.render('index.ejs'));
+                    thumbnail.mv(`./img/${thumbnailName}`, function (err) {
+                        if (err) {
+                            res.render('index.ejs');
+                            console.log(err);
+                        } else {
+                            // fileInfo indicates information of uploaded video. It contains filename 
+                            // (e.g., example.mp4) and title (e.g., example).
+                            const fileInfo = ({
+                                video: videoName,
+                                title: title[0],
+                                thumbnail: `/${thumbnailName}`
+                            })
+                            uploader(fileInfo).then(result => res.render('index.ejs'));
+                        }
+                    })   
                 }
             });
         }
