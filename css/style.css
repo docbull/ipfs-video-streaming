@@ -10,6 +10,7 @@
 }
 .thumbnail {
   width: 312px;
+  height: 175px;
 }
 .close-button {
   width: 2%;
@@ -78,8 +79,10 @@
   transform: translate(-50%, -50%);
 }
 #select-video-button {
-  width: 50%;
-  height: 50%;
+  width: 210px;
+}
+#select-thumbnail-button {
+  width: 200px;
 }
 
 video {
