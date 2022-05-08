@@ -5,6 +5,7 @@ import process from 'process';
 import dotenv from 'dotenv';
 import json2csv from 'json2csv';
 import { Web3Storage, getFilesFromPath } from 'web3.storage';
+import ffmpeg from 'fluent-ffmpeg';
 dotenv.config();
 
 let filePaths = [];
@@ -46,6 +47,7 @@ async function updateVideoLists(fileName, fields, data) {
 async function readDirectory(filePath, fileInfo) {
     const fsPromises = fs.promises;
     let fileDir = `${filePath}${fileInfo.title}/`;
+    console.log(fileDir);
     
     return new Promise((resolve, reject) => {
         fs.readdir(path.join(filePath, fileInfo.title), (err, files) => {
@@ -110,17 +112,22 @@ async function encodeHLS(fileInfo, filePath) {
     ];
     // make a directory that has same name of the uploaded video title
     execac('mkdir', args);
-    args = [
-        '-i', `${filePath}${fileInfo.video}`,
-        '-profile:v', 'baseline',
-        '-level', '3.0',
-        '-start_number', '0',
-        '-hls_time', '2',
-        '-hls_list_size', '0',
-        '-f', 'hls',
-        `${workingDir}/master.m3u8`
-    ];
-    await execac('ffmpeg', args);
+
+    return new Promise((resolve) => {
+        ffmpeg(`${filePath}${fileInfo.video}`, { timeout: 432000 })
+            .addOptions([
+                '-i', `${filePath}${fileInfo.video}`,
+                '-profile:v', 'baseline',
+                '-level', '3.0',
+                '-start_number', '0',
+                '-hls_time', '2',
+                '-hls_list_size', '0',
+                '-f', 'hls'
+            ]).output(`${workingDir}/master.m3u8`).on('end', () => {
+                console.log('FFmpeg End');
+            }).run();
+        return '📼 HLS encoded!';
+    });
 }
 
 exports.uploader = async function (fileInfo) {
@@ -128,5 +135,6 @@ exports.uploader = async function (fileInfo) {
     const web3Token = process.env.Web3Token;
 
     await encodeHLS(fileInfo, filePath)
-        .then(result => IPFSUploader(web3Token, fileInfo, filePath));
+        .then(result => console.log(result));
+    IPFSUploader(web3Token, fileInfo, filePath)
 }
