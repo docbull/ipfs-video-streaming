@@ -6,21 +6,15 @@ This web application is an IPFS-based HLS video streaming service for Web 3.0. T
 
 It contains `JS-IPFS`, `HLS.js`, and `HLSjs-IPFS-Loader` modules.
 
-On the process:
-- `Video uploader` When user uploads a video on the web app, it encodes the video into several chunks using `HLS`, and then it uploads to IPFS network using `Web3.Storage`, one of the famous Filecoin-backed Pinning Services, for the use of permanent storage.
-
 ## Contents
 - [Prerequisites](#prerequisites)
-- [Web Server based Streaming Service](#web-server-based-streaming-service)
+- [Quick Start](#quick-start)
 
 If you want to run IPFS-based HLS streaming example on localhost (don't want to setup server side), you can refer [this sample](https://github.com/ipfs-examples/js-ipfs-examples/tree/master/examples/browser-video-streaming) that lets you experience IPFS-based HLS video streaming running on localhost.
 
-
-## Web Server based Streaming Service
-
-
-
 ## Prerequisites
+
+### HTTPS Set Up
 
 You need to setup `SSL` for running `HTTPS` service. The web page to playback the videos in this project requires HTML file from web server. However, if you run web server on HTTP or localhost, the contents may be blocked by web browsers, such as `chrome`, `safari`, `firefox`, and `brave`, because there is a security policy in libp2p. Fortunately, you can build HTTPS using simple ceritifications.
 
@@ -40,4 +34,21 @@ Before you install `mkcert`, you need to install `brew` or `homebrew` first.
 $ brew install mkcert
 $ mkcert -install
 $ mkcert localhost
+```
+
+### Web3.Storage
+
+This app uses [Web3.Storage](https://web3.storage), a Filecoin-backed Pinning Service, for uploading HLS chunks to IPFS network. If you want to activate video uploading functionality, you need to set up Web3.Storage API in `.env` file. [Here](https://web3.storage/docs/#quickstart) is an instruction for setting up your Web3.Storage API.
+```
+# .env
+Web3Token=eyJhbGc...
+```
+
+## Quick Start
+
+```javascript
+# install NodeJS modules
+$ npm install
+# run the web app
+$ npm start
 ```
