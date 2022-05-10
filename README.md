@@ -9,6 +9,7 @@ It contains `JS-IPFS`, `HLS.js`, and `HLSjs-IPFS-Loader` modules.
 ## Contents
 - [Prerequisites](#prerequisites)
 - [Quick Start](#quick-start)
+- [Functionality](#functionality)
 
 If you want to run IPFS-based HLS streaming example on localhost (don't want to setup server side), you can refer [this sample](https://github.com/ipfs-examples/js-ipfs-examples/tree/master/examples/browser-video-streaming) that lets you experience IPFS-based HLS video streaming running on localhost.
 
@@ -52,3 +53,14 @@ $ npm install
 # run the web app
 $ npm start
 ```
+
+## Functionality
+
+
+### Upload
+
+It provides video uploading function, which encodes the video using HLS protocol. Users can upload their videos by contacting the top-right button.
+
+<img width="1920" alt="Screen Shot 2022-05-11 at 2 18 01 AM" src="https://user-images.githubusercontent.com/59289320/167685793-6627b11f-4df8-4460-b4d4-78f58afd80c2.png">
+
+Select a video file and a image file for thumbnail, and click `submit` button. When it finished the processing, it reloads the main page and updates video lists. The video lists is in `public/video-list.csv`.
