@@ -11,7 +11,7 @@ dotenv.config();
 let filePaths = [];
 
 function execac(command, args) {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
         const proc = execa(command, args);
 
         proc.stdout.on('data', (data) => {
@@ -58,12 +58,11 @@ async function readDirectory(filePath, fileInfo) {
                 resolve('successfully read the directory');
             }
         });
-
     });
 }
 
 // Web3StorageUploader uploads video chunks into IPFS network using Web3.Storage.
-async function Web3StorageUploader(web3Token, fileInfo, filePath) {
+async function Web3StorageUploader(web3Token, fileInfo) {
     const token = web3Token;
 
     if (!token) {
@@ -101,7 +100,7 @@ async function Web3StorageUploader(web3Token, fileInfo, filePath) {
 // Pinning Service
 async function IPFSUploader(web3Token, fileInfo, filePath) {
     await readDirectory(filePath, fileInfo)
-        .then(result => Web3StorageUploader(web3Token, fileInfo, filePath));
+        .then(result => Web3StorageUploader(web3Token, fileInfo));
 }
 
 // encodesHLS encodes the video using HLS protocol based on ffmpeg that installed in media server
@@ -114,6 +113,7 @@ async function encodeHLS(fileInfo, filePath) {
     execac('mkdir', args);
 
     return new Promise((resolve) => {
+        // ${filePath}${fileInfo.video} = video HTML address
         ffmpeg(`${filePath}${fileInfo.video}`, { timeout: 432000 })
             .addOptions([
                 '-i', `${filePath}${fileInfo.video}`,
@@ -124,9 +124,8 @@ async function encodeHLS(fileInfo, filePath) {
                 '-hls_list_size', '0',
                 '-f', 'hls'
             ]).output(`${workingDir}/master.m3u8`).on('end', () => {
-                console.log('FFmpeg End');
+                resolve('📼 HLS encoded!');
             }).run();
-        return '📼 HLS encoded!';
     });
 }
 
@@ -136,5 +135,5 @@ exports.uploader = async function (fileInfo) {
 
     await encodeHLS(fileInfo, filePath)
         .then(result => console.log(result));
-    IPFSUploader(web3Token, fileInfo, filePath)
+    await IPFSUploader(web3Token, fileInfo, filePath);
 }
